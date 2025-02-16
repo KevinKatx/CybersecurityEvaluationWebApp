@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.login-container {
+    width: 50%;
+    background: #FFE5B4;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container {
+    width: 50%;
+    background: url('assets/placeholderResort.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+h1 {
+    color: #453a17;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 80%;
+}
+
+label {
+    margin-top: 10px;
+    color: #453a17;
+    font-weight: bold;
+    width: 53%;
+    text-align: left;
+}
+
+input[type="text"], input[type="password"] {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    margin-top: 17px;
+    background-color: #e4a70e;
+    color: #453a17;
+    border: none;
+    width: 50%;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #b47800;
+}
+
+h4 {
+    color: #453a17;
+    margin-top: 50px;
+}
+
+a {
+    color: #b47800; 
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
