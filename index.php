@@ -1,6 +1,36 @@
 <?php
     include('db.php');
     session_start();
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+    
+        // Fetch user from the database
+        $stmt = $conn->prepare("SELECT * FROM employee WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+    
+        // Debug: Print user data
+        if (!$user) {
+            echo "<script>alert('User not found!');</script>";
+            exit();
+        }
+
+        // Verify the hashed password (remove re-hashing)
+        if (password_verify($password, $user["password"])) {
+            if($user["Role"] == "Administrator"){
+                $_SESSION["admin"] = $user["email"];
+                echo "<script>alert('Login successful!'); window.location.href='admin_dashboard.php';</script>";
+            }
+            $_SESSION["user"] = $user["email"];
+            echo "<script>alert('Login successful!'); window.location.href='dashboard.php';</script>";
+        } else {
+            echo "<script>alert('Invalid email or password');</script>";
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +45,7 @@
         <div class="wrapper">
             <div class="login-container">
                 <h1>Sign In</h1>
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                <form method="post" action="index.php">
                     <label>Email:</label>
                     <input type="text" name="email">
                     <label>Password:</label>

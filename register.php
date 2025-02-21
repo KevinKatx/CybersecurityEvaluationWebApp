@@ -26,7 +26,7 @@
         }
     
         // Hash password before sending it to API
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
     
         // Convert data to JSON
         $data = [
@@ -42,7 +42,7 @@
         $json_data = json_encode($data);
     
         // Send data to API using cURL
-        $ch = curl_init("http://localhost/CybersecurityEvaluationWebApp/api.php");
+        $ch = curl_init("http://127.0.0.1/CybersecurityEvaluationWebApp/api.php");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -53,6 +53,8 @@
             die("cURL Error: " . curl_error($ch));
         }
         curl_close($ch);
+        var_dump($response);
+        exit();
     
         // Decode JSON response
         $result = json_decode($response, true);
@@ -60,9 +62,7 @@
         if ($result === null) {
             die("API response is invalid: " . $response);
         }
-        echo "<p>" . htmlspecialchars($result["message"]) . "</p>";
-        // Display response message
-        echo "<p>" . htmlspecialchars($result["message"]) . "</p>";
+
     }
 ?>
 
