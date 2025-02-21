@@ -22,7 +22,7 @@
                     <input type="password" name="password">
                     <input type="submit" value="Login">
                 </form>
-                <h4>No Account Yet? <a href="registernow.php">Register Now</a></h4>
+                <h4>No Account Yet? <a href="register.php">Register Now</a></h4>
             </div>
             <div class="image-container"></div>
         </div>
