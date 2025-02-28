@@ -9,6 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once("db.php");
 
 $request_method = $_SERVER["REQUEST_METHOD"];
+
 $input = json_decode(file_get_contents('php://input'), true);
 
 switch ($request_method){
@@ -27,6 +28,7 @@ switch ($request_method){
         } else {
             global $conn;
             $query = "SELECT * FROM employee";
+
             $result = $conn->query($query);
             $data = [];
         
@@ -37,6 +39,8 @@ switch ($request_method){
             echo json_encode($data);
         }
         break;
+
+
     case "POST":
         global $conn;
         $data = json_decode(file_get_contents("php://input"), true);
@@ -133,6 +137,7 @@ switch ($request_method){
         } else {
             echo json_encode(["message" => "Invalid input"]);
         }
+
         break;
 }
     
