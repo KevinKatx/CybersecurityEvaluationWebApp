@@ -8,6 +8,10 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 $users = json_decode($response, true);
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +24,14 @@ $users = json_decode($response, true);
 </head>
 
 <body>
-    <a href="register.php" class="back-button">Back to Register</a>
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>User Details</h2>
+            <p id="modalContent"></p> 
+        </div>
+    </div>
+    <a href="index.php" class="back-button">Back to Login</a>
     <table>
         <thead>
             <tr>
@@ -38,7 +49,7 @@ $users = json_decode($response, true);
         <tbody>
             <?php if (!empty($users)): ?>
                 <?php foreach ($users as $user): ?>
-                    <tr>
+                    <tr onclick="viewUser(<?=$user['id']?>, '<?=$user['role']?>')">
                         <td><?= htmlspecialchars($user['id']) ?></td>
                         <td><?= htmlspecialchars($user['first_name']) ?></td>
                         <td><?= htmlspecialchars($user['last_name']) ?></td>
@@ -46,7 +57,7 @@ $users = json_decode($response, true);
                         <td><?= htmlspecialchars($user['gender']) ?></td>
                         <td><?= htmlspecialchars($user['phone']) ?></td>
                         <td><?= htmlspecialchars($user['email']) ?></td>
-                        <td><?= htmlspecialchars($user['Role']) ?></td>
+                        <td><?= htmlspecialchars($user['role']) ?></td>
                         <td>
                             <a href="update.php?id=<?= $user['id'] ?>">
                                 <button class="edit-btn">Edit</button>
@@ -75,6 +86,45 @@ $users = json_decode($response, true);
                 .catch(error => console.error('Error:', error));
             }
         }
+
+        function viewUser(id, role) {
+            console.log(`Viewing user with ID: ${id} and Role: ${role}`);
+
+            fetch(`http://127.0.0.1/CybersecurityEvaluationWebApp/api.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    let modalContent = document.getElementById("modalContent");
+                    if (role === 'Employee') {
+                        if (data.score !== undefined) {
+                            modalContent.innerHTML = `
+                                <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
+                                <p><strong>Email:</strong> ${data.email}</p>
+                                <p><strong>Score:</strong> ${data.score}</p>
+                            `;
+                            document.getElementById("userModal").style.display = "flex";
+                        } else {
+                            modalContent.innerHTML = "<p>Employee has no score yet.</p>";
+                            document.getElementById("userModal").style.display = "block";
+                        }
+                    } else {
+                        alert("Only Employees have scores!");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        }
+
+        function closeModal() {
+            // Hide Modal
+            document.getElementById("userModal").style.display = "none";
+         }
+
+    // Optional: Close Modal When Clicking Outside
+    window.onclick = function (event) {
+        const modal = document.getElementById("userModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
     </script>
 </body>
 </html>

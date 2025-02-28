@@ -21,11 +21,11 @@
 
         // Verify the hashed password (remove re-hashing)
         if (password_verify($password, $user["password"])) {
-            if($user["Role"] == "Administrator"){
+            if($user["role"] == "Admin"){
                 $_SESSION["admin"] = $user["email"];
                 echo "<script>alert('Login successful!'); window.location.href='admin_dashboard.php';</script>";
             }
-            $_SESSION["user"] = $user["email"];
+            $_SESSION["user"] = $user;
             echo "<script>alert('Login successful!'); window.location.href='dashboard.php';</script>";
         } else {
             echo "<script>alert('Invalid email or password');</script>";
