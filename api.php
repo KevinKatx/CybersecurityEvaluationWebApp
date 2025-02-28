@@ -14,6 +14,7 @@ $input = json_decode(file_get_contents('php://input'), true);
 
 switch ($request_method){
     case "GET":
+<<<<<<< HEAD
         if (!empty($_GET["id"])) {
             global $conn;
             $id = intval($_GET["id"]);
@@ -55,9 +56,39 @@ switch ($request_method){
         
             while ($row = $result->fetch_assoc()) {
                 $data[] = $row;
+=======
+        global $conn;
+        $id = isset($_GET["id"]) ? intval($_GET["id"]) : null;
+
+        try {
+            if ($id) {
+                $query = "SELECT employee.*, evaluation.score 
+                        FROM employee 
+                        LEFT JOIN evaluation ON employee.id = evaluation.employeeID 
+                        WHERE employee.id = ? ORDER BY evaluation.date DESC LIMIT 1";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    echo json_encode($result->fetch_assoc());
+                } else {
+                    echo json_encode(["message" => "Employee not found"]);
+                }
+            } else {
+                $query = "SELECT * FROM employee";
+                $result = $conn->query($query);
+                $data = [];
+
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+                echo json_encode($data);
+>>>>>>> 46f7fa7 (Eval P1 and Employee score recording)
             }
-        
-            echo json_encode($data);
+        } catch (Exception $e) {
+            echo json_encode(["error" => $e->getMessage()]);
         }
         break;
 
