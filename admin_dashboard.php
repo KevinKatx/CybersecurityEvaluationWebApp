@@ -2,28 +2,21 @@
 
 $api_url = 'http://127.0.0.1/CybersecurityEvaluationWebApp/api.php';
 
-// Initialize cURL session
 $ch = curl_init($api_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// Execute cURL request
 $response = curl_exec($ch);
 curl_close($ch);
 
-// Convert JSON response into PHP array
 $users = json_decode($response, true);
-
-
 ?>
 
-
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Users Table</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="usersstyle.css">
-
+    <link rel="stylesheet" href="admin_dashboardstyles.css">
 </head>
 
 <body>
@@ -41,7 +34,6 @@ $users = json_decode($response, true);
                 <th>Role</th>
                 <th>Action</th>
             </tr>
-            
         </thead>
         <tbody>
             <?php if (!empty($users)): ?>
@@ -56,18 +48,19 @@ $users = json_decode($response, true);
                         <td><?= htmlspecialchars($user['email']) ?></td>
                         <td><?= htmlspecialchars($user['Role']) ?></td>
                         <td>
-                            <a href="update.php?id=<?= $user['id'] ?>"><button>Edit</button></a>
-                            <button onclick="deleteUser(<?= $user['id'] ?>)">Delete</button>
+                            <a href="update.php?id=<?= $user['id'] ?>">
+                                <button class="edit-btn">Edit</button>
+                            </a>
+                            <button class="delete-btn" onclick="deleteUser(<?= $user['id'] ?>)">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
-                <tr><td colspan="4">No users found</td></tr>
+                <tr><td colspan="9">No users found</td></tr>
             <?php endif; ?>
         </tbody>
-        
-
     </table>
+
     <script>
         function deleteUser(id) {
             if (confirm("Are you sure you want to delete this user?")) {
@@ -77,7 +70,7 @@ $users = json_decode($response, true);
                 .then(response => response.json())
                 .then(data => {
                     alert(data.message);
-                    location.reload(); // Refresh the page to update the user list
+                    location.reload();
                 })
                 .catch(error => console.error('Error:', error));
             }

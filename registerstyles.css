@@ -1,0 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.wrapper {
+    display: flex;
+    height: 100vh;
+    flex-direction: row;
+}
+
+.image-container {
+    flex: 1;
+    background: url('assets/placeholderResort.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.form-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #FFE5B4;
+}
+
+.register-container {
+    width: 75%;
+    max-width: 600px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    color: #453a17;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+label {
+    margin-top: 10px;
+    color: #453a17;
+    font-weight: bold;
+    text-align: left;
+}
+
+input{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+input[type="number"]{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #e4a70e;
+    color: #453a17;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #d0940c;
+}
+
+.gender-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.row-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.row-container input[type="text"],
+.row-container input[type="number"] {
+    width: 100%;
+}
+
+.age-gender-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.age-container {
+    flex: 1;
+}
+
+.gender-container {
+    flex: 2;
+    display: flex;
+    margin-top: 0;
+}
+
+h4 {
+    color: #453a17;
+    margin-top: 100px;
+}
+
+a {
+    color: #b47800; 
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .image-container {
+        height: 40vh;
+    }
+
+    .form-container {
+        height: auto;
+        padding: 20px;
+    }
+}

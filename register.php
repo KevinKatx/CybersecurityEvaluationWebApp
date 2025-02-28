@@ -72,74 +72,68 @@
         <title>Hanuka's Resort CyberSecurity Evaluation</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="indexstyles.css">
+        <link rel="stylesheet" href="registerstyles.css">
     </head>
-    <style>
-        label {
-            margin-top: 10px;
-            color: #453a17;
-            font-weight: bold;
-            min-width: 10.5cm;
-            width: 36%;
-            text-align: left;
-        }
-
-        input[type="text"], input[type="password"] , input[type="number"] {
-            min-width: 10cm;
-            width: 33%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        input[type="submit"] {
-            margin-top: 17px;
-            background-color: #e4a70e;
-            color: #453a17;
-            border: none;
-            min-width: 10cm;
-            width: 30%;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        
-    </style>
     
     <body>
-        <div class="wrapper">
-            <div class="login-container" style="width: 100%">
+    <div class="wrapper">
+        <div class="image-container"></div>
+        <div class="form-container">
+            <div class="register-container">
                 <h1>Register</h1>
-                <form action="register.php "method="post" onsubmit="return validatePassword()">
-                    <label>First Name:</label>
-                    <input type="text" name="first_name" required>
-                    <label>Last Name:</label>
-                    <input type="text" name="last_name" required>
-                    <label>Age:</label>
-                    <input type="number" name="age" id="age" required>
-                    <label>Gender:</label>
-                    <div style="display: inline-block; text-align: left; ">
-                        <input type="radio" id="male" name="gender" value="M" required>
-                        <label for="male">Male</label>
-                        <br>
-                        <input type="radio" id="female" name="gender" value="F" required>
-                        <label for="female">Female</label>
+                <form action="register.php" method="post" onsubmit="return validatePassword()">
+                <div class="row-container">
+                        <div>
+                            <label>First Name:</label>
+                            <input type="text" name="first_name" required>
+                        </div>
+                        <div>
+                            <label>Last Name:</label>
+                            <input type="text" name="last_name" required>
+                        </div>
                     </div>
-                    <label>Phone Number:</label>
-                    <input type="text" name="phone" required>
-                    <label>Email:</label>
-                    <input type="text" name="email" required>
-                    <label>Password:</label>
-                    <input type="password" name="password" id="password" required>
-                    <label>Repeat Password:</label>
-                    <input type="password" name="confirmpassword" id="confirmpassword" required>
+
+                    <div class="age-gender-container">
+                        <div class="age-container">
+                            <label>Age:</label>
+                            <input type="number" name="age" id="age" required>
+                        </div>
+                        <label>Gender:</label>
+                        <div class="gender-container">
+                            <label><input type="radio" id="male" name="gender" value="M" required> Male</label>
+                            <label><input type="radio" id="female" name="gender" value="F" required> Female</label>
+                        </div>
+                    </div>
+
+                    <div class="row-container">
+                        <div>
+                            <label>Phone Number:</label>
+                            <input type="text" name="phone" required>
+                        </div>
+                        <div>
+                            <label>Email:</label>
+                            <input type="text" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="row-container">
+                        <div>
+                            <label>Password:</label>
+                            <input type="password" name="password" id="password" required>
+                        </div>
+                        <div>
+                            <label>Repeat Password:</label>
+                            <input type="password" name="confirmpassword" id="confirmpassword" required>
+                        </div>
+                    </div>
+
                     <input type="submit" value="Sign Up">
                 </form>
                 <h4>Already have an account? <a href="index.php">Go to Login</a></h4>
             </div>
         </div>
-    </body>
+    </div>
+
     <script>
         function validatePassword() {
             let password = document.getElementById("password").value;
@@ -152,5 +146,5 @@
             return true;
         }
     </script>
-
+</body>
 </html>
