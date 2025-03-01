@@ -95,7 +95,7 @@ $users = json_decode($response, true);
                 .then(data => {
                     let modalContent = document.getElementById("modalContent");
                     if (role === 'Employee') {
-                        if (data.score !== undefined) {
+                        if (data.score !== undefined && data.score !== null) {
                             modalContent.innerHTML = `
                                 <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
                                 <p><strong>Email:</strong> ${data.email}</p>
@@ -103,8 +103,13 @@ $users = json_decode($response, true);
                             `;
                             document.getElementById("userModal").style.display = "flex";
                         } else {
-                            modalContent.innerHTML = "<p>Employee has no score yet.</p>";
-                            document.getElementById("userModal").style.display = "block";
+                            
+                            modalContent.innerHTML = `
+                                <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
+                                <p><strong>Email:</strong> ${data.email}</p>
+                                <p>Employee has no score yet.</p>
+                            `;
+                            document.getElementById("userModal").style.display = "flex";
                         }
                     } else {
                         alert("Only Employees have scores!");
