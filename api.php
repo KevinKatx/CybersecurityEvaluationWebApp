@@ -111,7 +111,7 @@ switch ($request_method){
             $email = $conn->real_escape_string($data["email"]);
             $password = $conn->real_escape_string($data["password"]);
 
-            $query = "INSERT INTO employee (first_name, last_name, age, gender, phone, email, Role, password) 
+            $query = "INSERT INTO employee (first_name, last_name, age, gender, phone, email, role, password) 
                       VALUES ('$first_name', '$last_name', $age, '$gender', '$phone', '$email', 'Employee', '$password')";
             
             if ($conn->query($query)) {
@@ -136,7 +136,7 @@ switch ($request_method){
             if (
                 isset($data["id"]) && isset($data["first_name"]) && isset($data["last_name"]) &&
                 isset($data["age"]) && isset($data["gender"]) &&
-                isset($data["phone"]) && isset($data["email"]) && isset($data["Role"])
+                isset($data["phone"]) && isset($data["email"]) && isset($data["role"])
             ) {
                 $id = intval($data["id"]);
                 $first_name = $conn->real_escape_string($data["first_name"]);
@@ -145,7 +145,7 @@ switch ($request_method){
                 $gender = $conn->real_escape_string($data["gender"]);
                 $phone = $conn->real_escape_string($data["phone"]);
                 $email = $conn->real_escape_string($data["email"]);
-                $role = $conn->real_escape_string($data["Role"]);
+                $role = $conn->real_escape_string($data["role"]);
             
                 // Handle password update only if provided
                 $passwordUpdate = "";
@@ -159,7 +159,7 @@ switch ($request_method){
                 $query = "UPDATE employee 
                         SET first_name = '$first_name', last_name = '$last_name', 
                             age = $age, gender = '$gender', phone = '$phone', 
-                            email = '$email', Role = '$role' 
+                            email = '$email', role = '$role' 
                             $passwordUpdate 
                         WHERE id = $id";
             

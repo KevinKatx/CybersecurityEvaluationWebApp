@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_method']) && $_POST['
     $phone = $_POST['phone'];
     $gender = $_POST['gender'];
     $age = $_POST['age'];
-    $role = $_POST['Role'];
+    $role = $_POST['role'];
 
     $updated_data = [
         'id' => $id,
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_method']) && $_POST['
         'phone' => $phone,
         'gender' => $gender,
         'age' => $age,
-        'Role' => $role
+        'role' => $role
     ];
     if (!empty($password)) {
         $updated_data['password'] = $password;
@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_method']) && $_POST['
     <link rel="stylesheet" href="updatestyles.css">
 </head>
 <body>
+    <a href="admin_dashboard.php" class="back-button">&#8592; Back</a>
     <div class="container">
         <h2>Update User Entry</h2>
         <form method="POST" action="update.php?id=<?= $id ?>">
@@ -84,9 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_method']) && $_POST['
                 </div>
                 <div>
                     <label>Gender:</label>
-                    <div>
-                        <input type="radio" name="gender" value="M" <?= ($user['gender'] == 'M') ? 'checked' : '' ?>> Male
-                        <input type="radio" name="gender" value="F" <?= ($user['gender'] == 'F') ? 'checked' : '' ?>> Female
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="gender" value="M" <?= ($user['gender'] == 'M') ? 'checked' : '' ?>> Male
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="F" <?= ($user['gender'] == 'F') ? 'checked' : '' ?>> Female
+                        </label>
                     </div>
                 </div>
                 <div>
@@ -103,9 +108,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_method']) && $_POST['
                 </div>
                 <div>
                     <label>Role:</label>
-                    <div>
-                        <input type="radio" name="Role" value="Employee" <?= ($user['Role'] == 'Employee') ? 'checked' : '' ?>> Employee
-                        <input type="radio" name="Role" value="Administrator" <?= ($user['Role'] == 'Administrator') ? 'checked' : '' ?>> Administrator
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="role" value="Employee" <?= ($user['role'] == 'Employee') ? 'checked' : '' ?>> Employee
+                        </label>
+                        <label>
+                            <input type="radio" name="role" value="Admin" <?= ($user['role'] == 'Admin') ? 'checked' : '' ?>> Administrator
+                        </label>
                     </div>
                 </div>
                 <div class="full-width">
