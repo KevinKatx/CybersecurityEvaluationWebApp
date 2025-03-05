@@ -6,34 +6,32 @@
         echo "<script>alert('You must be logged in to view this page!'); window.location.href='index.php';</script>";
         exit();
     }
-
 ?>  
 
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Hanuka's Resort CyberSecurity Evaluation</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="dashboardstyle.css">
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSecurity Evaluation | Hanuka's Resort</title>
+    <link rel="stylesheet" href="dashboardstyle.css">
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.php" class="log-out">Logout</a>
 
-    <body>
-        <div class="evalContainer">
-            <div class="evalConText">
-                <h1>CyberSecurity Evaluation</h1>
-                <p>Welcome, you will now undergo a CyberSecurity Evaluation, make sure you have thoroughly prepared for the coming evaluation goodluck and may fortune favor you.</p>
-            </div>
-            <div class="evalBTN" id = "evalBTNStart">Start Evaluation</div>
+    <div class="container">
+        <div class="content">
+            <h1>CyberSecurity Evaluation</h1>
+            <p>Welcome! You are about to undergo a CyberSecurity Evaluation. Ensure you are well-prepared. Good luck, and may fortune favor you.</p>
+            <button id="evalBTNStart">Start Evaluation</button>
         </div>
-    </body>
+    </div>
+    
     <script>
-        evalBTN = document.getElementById("evalBTNStart")
-        evalBTN.addEventListener("click", function(){
-            window.location.href = "evaluation_p1.php"
-        })
+        document.getElementById("evalBTNStart").addEventListener("click", function(){
+            window.location.href = "evaluation_p1.php";
+        });
     </script>
-
-
-
+</body>
 </html>
