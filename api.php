@@ -10,10 +10,15 @@ include_once("db.php");
 
 $request_method = $_SERVER["REQUEST_METHOD"];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> eac1e5ecb725ee1bc679f887e28e29e7a9f1f040
 $input = json_decode(file_get_contents('php://input'), true);
 
 switch ($request_method){
     case "GET":
+<<<<<<< HEAD
 <<<<<<< HEAD
         if (!empty($_GET["id"])) {
             global $conn;
@@ -23,9 +28,38 @@ switch ($request_method){
             
             if ($result->num_rows > 0) {
                 echo json_encode($result->fetch_assoc());
+=======
+        global $conn;
+        $id = isset($_GET["id"]) ? intval($_GET["id"]) : null;
+
+        try {
+            if ($id) {
+                $query = "SELECT employee.*, evaluation.score 
+                        FROM employee 
+                        LEFT JOIN evaluation ON employee.id = evaluation.employeeID 
+                        WHERE employee.id = ? ORDER BY evaluation.date DESC LIMIT 1";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    echo json_encode($result->fetch_assoc());
+                } else {
+                    echo json_encode(["message" => "Employee not found"]);
+                }
+>>>>>>> eac1e5ecb725ee1bc679f887e28e29e7a9f1f040
             } else {
-                echo json_encode(["message" => "Employee not found"]);
+                $query = "SELECT * FROM employee";
+                $result = $conn->query($query);
+                $data = [];
+
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+                echo json_encode($data);
             }
+<<<<<<< HEAD
         } else {
             global $conn;
             $query = "SELECT * FROM employee";
@@ -87,6 +121,8 @@ switch ($request_method){
                 echo json_encode($data);
 >>>>>>> 46f7fa7 (Eval P1 and Employee score recording)
             }
+=======
+>>>>>>> eac1e5ecb725ee1bc679f887e28e29e7a9f1f040
         } catch (Exception $e) {
             echo json_encode(["error" => $e->getMessage()]);
         }
@@ -190,6 +226,7 @@ switch ($request_method){
         } else {
             echo json_encode(["message" => "Invalid input"]);
         }
+<<<<<<< HEAD
 =======
 
         if (!isset($data["first_name"], $data["last_name"], $data["age"], $data["gender"], $data["phone"], $data["email"])) {
@@ -266,6 +303,9 @@ switch ($request_method){
         }
         $stmt->close();
 >>>>>>> 0a7eec4 (Api for the project)
+=======
+
+>>>>>>> eac1e5ecb725ee1bc679f887e28e29e7a9f1f040
         break;
 }
     
