@@ -123,7 +123,7 @@ if (!isset($_SESSION["user"])) {
 
         function handleAction(action) {
             if (currentEmailIndex < emails.length) {
-                const email = emails[currentEmailIndex];
+                const email = emails[shuffledList[currentEmailIndex]];
                 if ((email.type === "phishing" && action === "report") ||
                     (email.type === "spam" && action === "reject") ||
                     (email.type === "legitimate" && action === "accept")) {
