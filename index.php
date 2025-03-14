@@ -71,8 +71,8 @@
 </head>
 <body>
     <div class="welcome-container">
-        <h1>Welcome to Hanuka's Resort CyberSecurity Evaluation</h1>
-        <p>Assess your capability in handling the security of Hanuka's Resort Website</p>
+        <h1>Welcome to Haniku's Resort CyberSecurity Evaluation</h1>
+        <p>Assess your capability in handling the security of Haniku's Resort Website</p>
         <!-- Button to redirect to login.php -->
         <button class="redirect-button" onclick="redirectToLogin()">Login</button>
     </div>

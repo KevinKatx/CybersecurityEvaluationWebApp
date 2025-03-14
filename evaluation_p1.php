@@ -8,10 +8,7 @@
    }
    
    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-       // Debugging: Print form data
-       echo "<pre>";
-       var_dump($_POST);
-       echo "</pre>";
+    
    
        $correct_answers = [
            "q1" => "b", "q2" => "c", "q3" => "b", "q4" => "b", "q5" => "b",
