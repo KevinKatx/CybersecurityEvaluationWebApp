@@ -72,7 +72,7 @@ switch ($request_method){
             if ($conn->query($query)) {
                 echo "<script>
                     alert('Employee added successfully!');
-                    window.location.href = 'index.php'; // Redirect to login page
+                    window.location.href = 'login.php'; // Redirect to login page
                 </script>";
             } else {
                 

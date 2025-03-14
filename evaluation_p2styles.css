@@ -1,0 +1,175 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background: #ffd78c; /* Warm yellow background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #3b2b08; /* Dark brown text for contrast */
+}
+
+.container {
+    display: flex;
+    gap: 40px; /* Increased gap for better separation */
+    background: #ffe5b4; /* Light peach background for the container */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Computer Screen (Questions Box) */
+.laptop {
+    width: 500px; /* Wider for a computer screen look */
+    height: 350px; /* Taller for a computer screen look */
+    background: #333; /* Dark gray for the screen */
+    padding: 20px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.laptop::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 10px solid #444; /* Bezel effect */
+    border-radius: 15px;
+    pointer-events: none;
+}
+
+.laptop h3 {
+    margin-top: 0;
+    color: #fff; /* White text for the screen */
+}
+
+.laptop p {
+    margin: 10px 0;
+    color: #e0e0e0; /* Light gray for text */
+}
+
+.laptop button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff; /* White text for buttons */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.laptop button:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+    box-shadow: 2px 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Button Colors */
+#accept-btn {
+    background-color: #28a745; /* Green for Accept */
+}
+
+#reject-btn {
+    background-color: #dc3545; /* Red for Reject */
+}
+
+#report-btn {
+    background-color: #ff8c42; /* Orange for Report */
+}
+
+/* Phone Screen (Notes Box) */
+.phone {
+    width: 250px; /* Narrower for a phone screen look */
+    height: 450px; /* Taller for a phone screen look */
+    background: #222; /* Dark gray for the screen */
+    padding: 20px;
+    border-radius: 30px; /* Rounded corners for a phone */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.phone::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 15px solid #333; /* Bezel effect */
+    border-radius: 30px;
+    pointer-events: none;
+}
+
+.phone h3 {
+    margin-top: 0;
+    color: #fff; /* White text for the screen */
+}
+
+.phone p {
+    margin: 10px 0;
+    color: #e0e0e0; /* Light gray for text */
+    font-size: 14px;
+}
+
+/* Score Display */
+#score {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    color: #2f1d04; /* Dark brown for the score */
+    background: #ffe5b4; /* Light peach background for the score */
+    padding: 10px 20px;
+    border-radius: 6px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#score::before {
+    content: "Score:";
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .laptop, .phone {
+        width: 90%;
+        height: auto;
+    }
+
+    #score {
+        position: static;
+        transform: none;
+        text-align: center;
+        margin-top: 20px;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

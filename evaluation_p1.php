@@ -3,7 +3,7 @@
    session_start();
    
    if (!isset($_SESSION["user"])) {
-       echo "<script>alert('You must be logged in to view this page!'); window.location.href='index.php';</script>";
+       echo "<script>alert('You must be logged in to view this page!'); window.location.href='login.php';</script>";
        exit();
    }
    

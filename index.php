@@ -1,60 +1,87 @@
-<?php
-    include('db.php');
-    session_start();
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-    
-        // Fetch user from the database
-        $stmt = $conn->prepare("SELECT * FROM employee WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
-    
-        // Debug: Print user data
-        if (!$user) {
-            echo "<script>alert('User not found!');</script>";
-            exit();
-        }
-
-        // Verify the hashed password (remove re-hashing)
-        if (password_verify($password, $user["password"])) {
-            if($user["role"] == "Admin"){
-                $_SESSION["admin"] = $user["email"];
-                echo "<script>alert('Login successful!'); window.location.href='admin_dashboard.php';</script>";
-            }
-            $_SESSION["user"] = $user;
-            echo "<script>alert('Login successful!'); window.location.href='dashboard.php';</script>";
-        } else {
-            echo "<script>alert('Invalid email or password');</script>";
-        }
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Hanuka's Resort CyberSecurity Evaluation</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="indexstyles.css">
-    </head>
-    <body>
-        <div class="wrapper">
-            <div class="login-container">
-                <h1>Sign In</h1>
-                <form method="post" action="index.php">
-                    <label>Email:</label>
-                    <input type="text" name="email">
-                    <label>Password:</label>
-                    <input type="password" name="password">
-                    <input type="submit" value="Login">
-                </form>
-                <h4>No Account Yet? <a href="register.php">Register Now</a></h4>
-            </div>
-            <div class="image-container"></div>
-        </div>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Blurred background image */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('assets/placeholderResort.jpg') no-repeat center center;
+            background-size: cover;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        .welcome-container {
+            background: rgba(255, 229, 180, 0.9); /* Semi-transparent background */
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #453a17;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #453a17;
+            font-size: 18px;
+        }
+
+        /* Button styling */
+        .redirect-button {
+            margin-top: 20px;
+            background-color: #e4a70e;
+            color: #453a17;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 24px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .redirect-button:hover {
+            background-color: #b47800;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Welcome to Hanuka's Resort CyberSecurity Evaluation</h1>
+        <p>Assess your capability in handling the security of Hanuka's Resort Website</p>
+        <!-- Button to redirect to login.php -->
+        <button class="redirect-button" onclick="redirectToLogin()">Login</button>
+    </div>
+
+    <script>
+        // JavaScript function to redirect to login.php
+        function redirectToLogin() {
+            window.location.href = "login.php";
+        }
+    </script>
+</body>
 </html>

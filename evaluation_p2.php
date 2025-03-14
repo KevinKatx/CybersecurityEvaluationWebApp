@@ -3,7 +3,7 @@ include('db.php');
 session_start();
 
 if (!isset($_SESSION["user"])) {
-    echo "<script>alert('You must be logged in to view this page!'); window.location.href='index.php';</script>";
+    echo "<script>alert('You must be logged in to view this page!'); window.location.href='login.php';</script>";
     exit();
 }
 
@@ -25,42 +25,8 @@ if (!isset($_SESSION["user"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="evaluation_p2styles.css">
     <title>Cybersecurity Simulation Game</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            display: flex;
-            gap: 20px;
-        }
-        .laptop {
-            width: 400px;
-            height: 300px;
-            background-color: #ddd;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        .phone {
-            width: 200px;
-            height: 300px;
-            background-color: #ccc;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        button {
-            margin: 5px;
-            padding: 10px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -69,9 +35,9 @@ if (!isset($_SESSION["user"])) {
             <p id="sender"></p>
             <p id="subject"></p>
             <p id="body"></p>
-            <button onclick="handleAction('accept')">Accept</button>
-            <button onclick="handleAction('reject')">Reject</button>
-            <button onclick="handleAction('report')">Report</button>
+            <button id="accept-btn" onclick="handleAction('accept')">Accept</button>
+            <button id="reject-btn" onclick="handleAction('reject')">Reject</button>
+            <button id="report-btn" onclick="handleAction('report')">Report</button>
         </div>
         <div class="phone">
             <h3>Notes</h3>
@@ -80,7 +46,7 @@ if (!isset($_SESSION["user"])) {
             <p>- Be cautious of unexpected attachments or links.</p>
         </div>
     </div>
-    <p>Score: <span id="score">0</span></p>
+    <p> <span id="score">0</span></p>
     
     <script>
         const emails = [

@@ -3,7 +3,7 @@
     session_start();
 
     if(!isset($_SESSION["user"])){
-        echo "<script>alert('You must be logged in to view this page!'); window.location.href='index.php';</script>";
+        echo "<script>alert('You must be logged in to view this page!'); window.location.href='login.php';</script>";
         exit();
     }
 ?>  
@@ -18,7 +18,7 @@
 </head>
 <body>
     <!-- Back Button -->
-    <a href="index.php" class="log-out">Logout</a>
+    <a href="login.php" class="log-out">Logout</a>
     <div style="display: flex; flex-direction: column;">
         <div class="container">
             <div class="content">
