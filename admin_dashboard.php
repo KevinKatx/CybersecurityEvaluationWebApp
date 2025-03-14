@@ -49,7 +49,7 @@ $users = json_decode($response, true);
         <tbody>
             <?php if (!empty($users)): ?>
                 <?php foreach ($users as $user): ?>
-                    <tr onclick="viewUser(<?=$user['id']?>, '<?=$user['role']?>')">
+                    <tr onclick="handleRowClick(event, <?=$user['id']?>, '<?=$user['role']?>')">
                         <td><?= htmlspecialchars($user['id']) ?></td>
                         <td><?= htmlspecialchars($user['first_name']) ?></td>
                         <td><?= htmlspecialchars($user['last_name']) ?></td>
@@ -87,6 +87,16 @@ $users = json_decode($response, true);
             }
         }
 
+        function handleRowClick(event, id, role) {
+            // Prevent the modal if the click happened inside a button
+            if (event.target.classList.contains("edit-btn") || event.target.classList.contains("delete-btn")) {
+                return;
+            }
+            
+            // Show modal only if not clicking edit/delete
+            viewUser(id, role);
+        }
+
         function viewUser(id, role) {
             console.log(`Viewing user with ID: ${id} and Role: ${role}`);
 
@@ -95,11 +105,12 @@ $users = json_decode($response, true);
                 .then(data => {
                     let modalContent = document.getElementById("modalContent");
                     if (role === 'Employee') {
-                        if (data.score !== undefined && data.score !== null) {
+                        if (data.scoreP1 !== undefined && data.scoreP1 !== null && data.scoreP2 !== undefined && data.scoreP2 !== null) {
                             modalContent.innerHTML = `
                                 <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
                                 <p><strong>Email:</strong> ${data.email}</p>
-                                <p><strong>Score:</strong> ${data.score}</p>
+                                <p><strong>P1 Score:</strong> ${data.scoreP1}</p>
+                                 <p><strong>P2 Score:</strong> ${data.scoreP2}</p>
                             `;
                             document.getElementById("userModal").style.display = "flex";
                         } else {
