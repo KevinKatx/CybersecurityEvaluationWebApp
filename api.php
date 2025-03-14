@@ -19,7 +19,7 @@ switch ($request_method){
 
         try {
             if ($id) {
-                $query = "SELECT employee.*, evaluation.score 
+                $query = "SELECT employee.*, evaluation.scoreP1, evaluation.scoreP2
                         FROM employee 
                         LEFT JOIN evaluation ON employee.id = evaluation.employeeID 
                         WHERE employee.id = ? ORDER BY evaluation.date DESC LIMIT 1";
@@ -129,24 +129,29 @@ switch ($request_method){
         }
         break;      
 
-    case "DELETE":
-        global $conn;
-        $data = json_decode(file_get_contents("php://input"), true);
-
-        if (isset($data["id"])) {
-            $id = intval($data["id"]);
-            $query = "DELETE FROM employee WHERE id = $id";
-
-            if ($conn->query($query)) {
-                echo json_encode(["message" => "Employee deleted successfully"]);
+        case "DELETE":
+            global $conn;
+        
+            // Retrieve ID from query parameter (e.g., api.php?id=5)
+            if (isset($_GET["id"])) {
+                $id = intval($_GET["id"]);
+        
+                $query = "DELETE FROM employee WHERE id = ?";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("i", $id);
+        
+                if ($stmt->execute()) {
+                    echo json_encode(["message" => "Employee deleted successfully"]);
+                } else {
+                    echo json_encode(["message" => "Error deleting employee"]);
+                }
+        
+                $stmt->close();
             } else {
-                echo json_encode(["message" => "Error deleting employee"]);
+                echo json_encode(["message" => "Invalid input"]);
             }
-        } else {
-            echo json_encode(["message" => "Invalid input"]);
-        }
-
-        break;
+        
+            break;
 }
     
 
