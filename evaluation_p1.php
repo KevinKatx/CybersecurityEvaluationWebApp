@@ -1,59 +1,122 @@
 <?php
-    include('db.php');
-    session_start();
-
-    if(!isset($_SESSION["user"])){
-        echo "<script>alert('You must be logged in to view this page!'); window.location.href='index.php';</script>";
-        exit();
-    }
-    
-    if (!isset($_SESSION["user"])) {
-        echo "<script>alert('You must be logged in to view this page!'); window.location.href='index.php';</script>";
-        exit();
-    }
-    
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $correct_answers = [
-            "q1" => "b",
-            "q2" => "c",
-            "q3" => "b",
-            "q4" => "b",
-            "q5" => "c",
-            "q6" => "b",
-            "q7" => "b",
-            "q8" => "c",
-            "q9" => "b",
-            "q10" => "c"
-        ];
-    
-        $score = 0;
-    
-        foreach ($correct_answers as $question => $answer) {
-            if (isset($_POST[$question]) && $_POST[$question] == $answer) {
-                $score++;
+   include('db.php');
+   session_start();
+   
+   if (!isset($_SESSION["user"])) {
+       echo "<script>alert('You must be logged in to view this page!'); window.location.href='index.php';</script>";
+       exit();
+   }
+   
+   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+       // Debugging: Print form data
+       echo "<pre>";
+       var_dump($_POST);
+       echo "</pre>";
+   
+       $correct_answers = [
+           "q1" => "b", "q2" => "c", "q3" => "b", "q4" => "b", "q5" => "b",
+           "q6" => "b", "q7" => "b", "q8" => "d", "q9" => "a", "q10" => "b",
+           "q11" => "a", "q12" => "a", "q13" => "c", "q14" => "b", "q15" => "b",
+           "q16" => "b", "q17" => "a", "q18" => "b", "q19" => "b", "q20" => "c",
+           "q21" => "b", "q22" => "c", "q23" => "b", "q24" => "c", "q25" => "a",
+           "q26" => "b", "q27" => "b", "q28" => "b", "q29" => "c", "q30" => "c",
+           "q31" => "b", "q32" => "b", "q33" => "b", "q34" => "d", "q35" => "b",
+           "q36" => "a", "q37" => "b", "q38" => "a", "q39" => "b", "q40" => "b"
+       ];
+   
+       $score = 0;
+   
+       foreach ($correct_answers as $question_id => $answer) {
+            if (isset($_POST[$question_id])) { // Now it matches the original question IDs
+                $user_answer = trim($_POST[$question_id]);
+                if ($user_answer == $answer) {
+                    $score++;
+                }
             }
         }
+   
+       echo "Calculated Score: $score";
     
-        $user_id = $_SESSION["user"]["id"]; // Assuming user id is stored in the session
-    
-        // Insert score into the evaluations table
-        $stmt = $conn->prepare("INSERT INTO evaluation (employeeID, score) VALUES (?, ?)");
+        $user_id = $_SESSION["user"]["id"];
+        $stmt = $conn->prepare("SELECT * FROM evaluation WHERE employeeID = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+    if ($result->num_rows == 0) {
+        $stmt = $conn->prepare("INSERT INTO evaluation (employeeID, scoreP1) VALUES (?, ?)");
         $stmt->bind_param("ii", $user_id, $score);
     
         if ($stmt->execute()) {
-            echo "<script>alert('Evaluation submitted successfully! Your score: $score'); window.location.href='dashboard.php';</script>";
+            echo "<script>window.location.href='dashboard.php';</script>";
         } else {
             echo "<script>alert('Failed to submit evaluation. Please try again.'); window.location.href='evaluation.php';</script>";
         }
+        exit();
+    } else {
+        $stmt = $conn->prepare("UPDATE evaluation SET scoreP1 VALUES (?) WHERE employeeID = ?");
+        $stmt->bind_param("ii", $score, $user_id);
+    
+        if ($stmt->execute()) {
+            echo "<script>window.location.href='dashboard.php';</script>";
+        } else {
+            echo "<script>alert('Failed to submit evaluation. Please try again.'); window.location.href='evaluation.php';</script>";
+        }
+    }
+
     
         $stmt->close();
         $conn->close();
-
-    
     }
 
-?>
+    // Question Pool
+    $questions = [
+        1 => ["question" => "What is the best practice when creating a password?", "options" => ["a" => "Using birthdate", "b" => "Using letters, numbers, and symbols", "c" => "Same password everywhere", "d" => "Writing it down"]],
+        2 => ["question" => "What should you do if you receive a suspicious email?", "options" => ["a" => "Reply immediately", "b" => "Click links to verify", "c" => "Report it", "d" => "Forward to co-workers"]],
+        3 => ["question" => "What is phishing?", "options" => ["a" => "A type of virus", "b" => "A social engineering attack", "c" => "An encrypted message", "d" => "A type of firewall"]],
+        4 => ["question" => "Which of the following is a strong password example?", "options" => ["a" => "password123", "b" => "Qw!89x@Pz", "c" => "mypassword", "d" => "abcde12345"]],
+        5 => ["question" => "Why is two-factor authentication (2FA) important?", "options" => ["a" => "It makes logging in faster", "b" => "It provides an extra security layer", "c" => "It disables password requirements", "d" => "It replaces antivirus software"]],
+        6 => ["question" => "What is the safest way to store your passwords?", "options" => ["a" => "Writing them down", "b" => "Using a password manager", "c" => "Saving in a text file", "d" => "Reusing the same password"]],
+        7 => ["question" => "What should you do if your device gets infected with malware?", "options" => ["a" => "Ignore it", "b" => "Run an antivirus scan", "c" => "Continue using it", "d" => "Delete important files"]],
+        8 => ["question" => "Which of these is a sign of a phishing email?", "options" => ["a" => "Unexpected sender", "b" => "Generic greetings", "c" => "Urgent action required", "d" => "All of the above"]],
+        9 => ["question" => "What does HTTPS in a URL indicate?", "options" => ["a" => "A secure connection", "b" => "A website under construction", "c" => "A government site", "d" => "An internal network"]],
+        10 => ["question" => "What is social engineering?", "options" => ["a" => "A form of encryption", "b" => "Manipulating people to gain information", "c" => "A type of firewall", "d" => "An antivirus update"]],
+        11 => ["question" => "Why should you avoid using public Wi-Fi for sensitive transactions?", "options" => ["a" => "It is slow", "b" => "It is often unsecured", "c" => "It is expensive", "d" => "It drains battery faster"]],
+        12 => ["question" => "What is a firewall?", "options" => ["a" => "A security system that blocks unauthorized access", "b" => "A type of virus", "c" => "An email filter", "d" => "A Wi-Fi signal booster"]],
+        13 => ["question" => "Which of the following is NOT a type of malware?", "options" => ["a" => "Trojan horse", "b" => "Ransomware", "c" => "Firewall", "d" => "Spyware"]],
+        14 => ["question" => "What should you do if you suspect a website is fake?", "options" => ["a" => "Enter your details to check", "b" => "Report it and avoid entering data", "c" => "Ignore the warning and continue", "d" => "Share it with friends"]],
+        15 => ["question" => "Which of the following is the most secure authentication method?", "options" => ["a" => "Password only", "b" => "Biometrics + 2FA", "c" => "PIN number", "d" => "Security questions"]],
+        16 => ["question" => "What does an antivirus program do?", "options" => ["a" => "Prevents all cyber attacks", "b" => "Detects and removes malware", "c" => "Stops spam emails", "d" => "Increases internet speed"]],
+        17 => ["question" => "What is the main purpose of encryption?", "options" => ["a" => "Hiding data from hackers", "b" => "Increasing download speed", "c" => "Deleting unwanted files", "d" => "Making the internet faster"]],
+        18 => ["question" => "Why should you lock your computer when leaving your desk?", "options" => ["a" => "To save battery", "b" => "To prevent unauthorized access", "c" => "To log out of accounts", "d" => "To clear browsing history"]],
+        19 => ["question" => "Which of the following is a good practice for securing your email account?", "options" => ["a" => "Using the same password for all accounts", "b" => "Enabling two-factor authentication", "c" => "Clicking on all links to verify emails", "d" => "Disabling security alerts"]],
+        20 => ["question" => "Which is the most common type of cyberattack?", "options" => ["a" => "DDoS attack", "b" => "Phishing", "c" => "Malware", "d" => "Man-in-the-middle attack"]],
+        21 => ["question" => "What is the best way to handle software updates?", "options" => ["a" => "Ignore them", "b" => "Install as soon as possible", "c" => "Only install major updates", "d" => "Disable auto-updates"]],
+        22 => ["question" => "What is the safest way to share sensitive information?", "options" => ["a" => "Email", "b" => "Text message", "c" => "Secure file-sharing service", "d" => "Social media"]],
+        23 => ["question" => "Which of these is an example of a secure website?", "options" => ["a" => "http://example.com", "b" => "https://example.com", "c" => "example.net", "d" => "www.example.org"]],
+        24 => ["question" => "What should you do if a website asks for unnecessary personal details?", "options" => ["a" => "Fill in fake details", "b" => "Provide accurate details", "c" => "Avoid using the site", "d" => "Use a weak password"]],
+        25 => ["question" => "What does a VPN do?", "options" => ["a" => "Hides IP address and encrypts internet traffic", "b" => "Increases internet speed", "c" => "Eliminates need for passwords", "d" => "Automatically detects malware"]],
+        26 => ["question" => "Which of these is a good practice for social media security?", "options" => ["a" => "Making all posts public", "b" => "Using a strong password", "c" => "Sharing login credentials with friends", "d" => "Clicking on all links in messages"]],
+        27 => ["question" => "What should you do if your account gets hacked?", "options" => ["a" => "Ignore it", "b" => "Change password and enable 2FA", "c" => "Create a new account", "d" => "Continue using the account as usual"]],
+        28 => ["question" => "What is ransomware?", "options" => ["a" => "A fake email", "b" => "Malware that encrypts files and demands payment", "c" => "A security software", "d" => "A social engineering attack"]],
+        29 => ["question" => "What is the weakest link in cybersecurity?", "options" => ["a" => "Hardware", "b" => "Software", "c" => "People", "d" => "Firewalls"]],
+        30 => ["question" => "How often should you change your passwords?", "options" => ["a" => "Only if hacked", "b" => "Every few months", "c" => "Never", "d" => "Every year"]],
+        31 => ["question" => "What is the primary goal of a cyber attack?", "options" => ["a" => "To improve system performance", "b" => "To steal, damage, or disrupt data", "c" => "To update software", "d" => "To test antivirus software"]],
+        32 => ["question" => "What is the term for software that records your keystrokes?", "options" => ["a" => "Trojan horse", "b" => "Keylogger", "c" => "Adware", "d" => "Ransomware"]],
+        33 => ["question" => "What should you do if you receive a call from someone claiming to be IT support asking for your password?", "options" => ["a" => "Give it to them", "b" => "Verify their identity before sharing", "c" => "Hang up and report the call", "d" => "Change your password immediately"]],
+        34 => ["question" => "Which of the following is a common method of spreading malware?", "options" => ["a" => "Downloading files from untrusted sources", "b" => "Opening email attachments from unknown senders", "c" => "Clicking on suspicious links", "d" => "All of the above"]],
+        35 => ["question" => "What is the purpose of a CAPTCHA?", "options" => ["a" => "To increase website loading speed", "b" => "To prevent bots from accessing websites", "c" => "To store user passwords", "d" => "To scan for malware"]],
+        36 => ["question" => "What is the most secure way to connect to a public Wi-Fi network?", "options" => ["a" => "Using a VPN", "b" => "Turning off Wi-Fi", "c" => "Using an open connection", "d" => "Sharing login credentials"]],
+        37 => ["question" => "What should you do if a website asks for your personal information unexpectedly?", "options" => ["a" => "Enter your details", "b" => "Verify the site's authenticity", "c" => "Ignore the request", "d" => "Send an email asking for confirmation"]],
+        38 => ["question" => "What is an insider threat in cybersecurity?", "options" => ["a" => "A threat from within an organization", "b" => "An external hacking attempt", "c" => "A phishing scam", "d" => "A type of firewall"]],
+        39 => ["question" => "What should you do with an old hard drive before disposing of it?", "options" => ["a" => "Throw it away", "b" => "Physically destroy or wipe the data", "c" => "Give it to someone else", "d" => "Store it indefinitely"]],
+        40 => ["question" => "What is a zero-day vulnerability?", "options" => ["a" => "A known security flaw with an available fix", "b" => "A security flaw that has no patch yet", "c" => "An antivirus software update", "d" => "A type of firewall attack"]],
+    ];
+    
+    
 
+    $random_keys = array_rand($questions, 20);
+?>
 
 <!DOCTYPE html>
 <html>
@@ -66,68 +129,16 @@
 
     <body>
         <form method="post" action="evaluation_p1.php">
-            <label id="q1">1. What is the best practice when creating a password for your company account?</label><br>
-            <div class="option"><input type="radio" name="q1" value="a"><span>Using your birthdate or pet's name</span></div>
-            <div class="option"><input type="radio" name="q1" value="b"><span>Using a combination of letters, numbers, and symbols</span></div>
-            <div class="option"><input type="radio" name="q1" value="c"><span>Using the same password across all accounts</span></div>
-            <div class="option"><input type="radio" name="q1" value="d"><span>Writing your password down on a sticky note</span></div>
-
-            <label id="q2">2. What should you do if you receive an email from an unknown sender asking for confidential company information?</label><br>
-            <div class="option"><input type="radio" name="q2" value="a"><span>Reply immediately to avoid conflict</span></div>
-            <div class="option"><input type="radio" name="q2" value="b"><span>Click on the links to verify the sender</span></div>
-            <div class="option"><input type="radio" name="q2" value="c"><span>Report the email to your supervisor or IT department</span></div>
-            <div class="option"><input type="radio" name="q2" value="d"><span>Forward the email to your co-workers</span></div>
-
-            <label id="q3">3. Which of the following is an example of phishing?</label><br>
-            <div class="option"><input type="radio" name="q3" value="a"><span>A customer calling to ask about room availability</span></div>
-            <div class="option"><input type="radio" name="q3" value="b"><span>Receiving an email that appears to be from your bank asking for login</span></div>
-            <div class="option"><input type="radio" name="q3" value="c"><span>A system update notification from your company’s software</span></div>
-            <div class="option"><input type="radio" name="q3" value="d"><span>Getting a text from your manager about a meeting</span></div>
-
-            <label id="q4">4. If you accidentally download a suspicious file on your work computer, what should you do first?</label><br>
-            <div class="option"><input type="radio" name="q4" value="a"><span>Delete the file and continue working</span></div>
-            <div class="option"><input type="radio" name="q4" value="b"><span>Inform your supervisor or IT department immediately</span></div>
-            <div class="option"><input type="radio" name="q4" value="c"><span>Restart the computer</span></div>
-            <div class="option"><input type="radio" name="q4" value="d"><span>Ignore it if nothing seems wrong</span></div>
-
-            <label id="q5">5. What is the safest way to share sensitive customer data?</label><br>
-            <div class="option"><input type="radio" name="q5" value="a"><span>Through social media direct messages</span></div>
-            <div class="option"><input type="radio" name="q5" value="b"><span>Via personal email</span></div>
-            <div class="option"><input type="radio" name="q5" value="c"><span>Using encrypted email or secured company systems</span></div>
-            <div class="option"><input type="radio" name="q5" value="d"><span>On a shared USB drive</span></div>
-
-            <label id="q6">6. Why should you always lock your workstation when stepping away?</label><br>
-            <div class="option"><input type="radio" name="q6" value="a"><span>To save battery</span></div>
-            <div class="option"><input type="radio" name="q6" value="b"><span>To prevent unauthorized access to company data</span></div>
-            <div class="option"><input type="radio" name="q6" value="c"><span>To make your workstation look organized</span></div>
-            <div class="option"><input type="radio" name="q6" value="d"><span>It’s just a company policy without real impact</span></div>
-
-            <label id="q7">7. What is considered a strong password?</label><br>
-            <div class="option"><input type="radio" name="q7" value="a"><span>Password123</span></div>
-            <div class="option"><input type="radio" name="q7" value="b"><span>M4n!l4R3sort2024</span></div>
-            <div class="option"><input type="radio" name="q7" value="c"><span>yourname123</span></div>
-            <div class="option"><input type="radio" name="q7" value="d"><span>Resort2024</span></div>
-
-            <label id="q8">8. If you receive a suspicious attachment from a known sender, what is the best action?</label><br>
-            <div class="option"><input type="radio" name="q8" value="a"><span>Open it since you know the sender</span></div>
-            <div class="option"><input type="radio" name="q8" value="b"><span>Download it and scan later</span></div>
-            <div class="option"><input type="radio" name="q8" value="c"><span>Contact the sender directly to verify before opening</span></div>
-            <div class="option"><input type="radio" name="q8" value="d"><span>Forward it to your co-workers</span></div>
-
-            <label id="q9">9. Which action could potentially compromise the resort’s cybersecurity?</label><br>
-            <div class="option"><input type="radio" name="q9" value="a"><span>Using a secure Wi-Fi network</span></div>
-            <div class="option"><input type="radio" name="q9" value="b"><span>Writing down your password on a notebook near the workstation</span></div>
-            <div class="option"><input type="radio" name="q9" value="c"><span>Enabling two-factor authentication</span></div>
-            <div class="option"><input type="radio" name="q9" value="d"><span>Updating antivirus software regularly</span></div>
-
-            <label id="q10">10. What is the best way to identify a secure website?</label><br>
-            <div class="option"><input type="radio" name="q10" value="a"><span>The website ends with ".com"</span></div>
-            <div class="option"><input type="radio" name="q10" value="b"><span>It asks for your password immediately</span></div>
-            <div class="option"><input type="radio" name="q10" value="c"><span>It uses https:// and displays a padlock icon in the URL bar</span></div>
-            <div class="option"><input type="radio" name="q10" value="d"><span>The website loads quickly</span></div>
-
+            <?php foreach ($random_keys as $key) { ?>
+                <label id="q<?php echo $key; ?>"> <?php echo $questions[$key]["question"]; ?></label><br>
+                <?php foreach ($questions[$key]["options"] as $optionKey => $optionValue) { ?>
+                    <div class="option">
+                        <input type="radio" name="q<?php echo $key; ?>" value="<?php echo $optionKey; ?>">
+                        <span><?php echo $optionValue; ?></span>
+                    </div>
+                <?php } ?>
+            <?php } ?>
             <input type="submit" value="Submit">
         </form>
     </body>
-
 </html>
