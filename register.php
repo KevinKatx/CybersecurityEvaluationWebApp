@@ -131,7 +131,7 @@
 
                     <input type="submit" value="Sign Up">
                 </form>
-                <h4>Already have an account? <a href="index.php">Go to Login</a></h4>
+                <h4>Already have an account? <a href="login.php">Go to Login</a></h4>
             </div>
         </div>
     </div>

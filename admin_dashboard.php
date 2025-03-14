@@ -31,7 +31,7 @@ $users = json_decode($response, true);
             <p id="modalContent"></p> 
         </div>
     </div>
-    <a href="index.php" class="back-button">Back to Login</a>
+    <a href="login.php" class="back-button">Back to Login</a>
     <table>
         <thead>
             <tr>
