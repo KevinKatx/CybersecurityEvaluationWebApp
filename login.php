@@ -15,7 +15,7 @@
     
         // Debug: Print user data
         if (!$user) {
-            echo "<script>alert('User not found!');</script>";
+            echo "<script>alert('User not found!');  window.location.href='login.php';</script>";
             exit();
         }
 
