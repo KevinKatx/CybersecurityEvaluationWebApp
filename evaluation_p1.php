@@ -54,7 +54,7 @@
         }
         exit();
     } else {
-        $stmt = $conn->prepare("UPDATE evaluation SET scoreP1 VALUES (?) WHERE employeeID = ?");
+        $stmt = $conn->prepare("UPDATE evaluation SET scoreP1 = ? WHERE employeeID = ?");
         $stmt->bind_param("ii", $score, $user_id);
     
         if ($stmt->execute()) {

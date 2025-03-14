@@ -105,7 +105,7 @@ $users = json_decode($response, true);
                 .then(data => {
                     let modalContent = document.getElementById("modalContent");
                     if (role === 'Employee') {
-                        if (data.score !== undefined && data.score !== null) {
+                        if (data.scoreP1 !== undefined && data.scoreP1 !== null && data.scoreP2 !== undefined && data.scoreP2 !== null) {
                             modalContent.innerHTML = `
                                 <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
                                 <p><strong>Email:</strong> ${data.email}</p>
