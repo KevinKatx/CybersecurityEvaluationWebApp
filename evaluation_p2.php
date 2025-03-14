@@ -90,7 +90,7 @@ if (!isset($_SESSION["user"])) {
             { sender: "helpdesk@company.com", subject: "Password Expiration Notice", body: "Your company password will expire in 3 days. Change it here.", type: "phishing" },
             { sender: "Evelny@company.com", subject: "Credential Request", body: "Can you give me your password, its an emergency", type: "phishing" },
             { sender: "deals@bigsavings.com", subject: "Exclusive Offer Just for You!", body: "Hurry! Limited-time discounts on all products. Click here to claim.", type: "spam" },
-            { sender: "newsletter@dailynews.com", subject: "Shocking News You Can't Miss!", body: "Read the latest viral story now!", type: "spam" }
+            { sender: "newsletter@dailynews.com", subject: "Shocking News You Can't Miss!", body: "Read the latest viral story now!", type: "spam" },
             { sender: "kennethVice@gmail.com", subject: "Reports on reservation status", body: "Can you send me the files on regarding the reservation of Mrs. Doe? Thank you", type: "legitimate" }
         ];
 
