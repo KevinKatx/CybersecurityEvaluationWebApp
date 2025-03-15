@@ -73,7 +73,7 @@ $users = json_decode($response, true);
                             <a href="update.php?id=<?= $user['id'] ?>">
                                 <button class="edit-btn">Edit</button>
                             </a>
-                            <button class="delete-btn" onclick="deleteUser(<?= $user['id'] ?>);  document.location.href = 'http://localhost:3000/admin_dashboard.php',true;  ">Delete</button>
+                            <button class="delete-btn" onclick="deleteUser(<?= $user['id'] ?>);">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -94,6 +94,7 @@ $users = json_decode($response, true);
                     alert(data.message);
                     
                     // ✅ Force refresh the page after deletion
+                    document.location.href = 'admin_dashboard.php';
                    
                 })
                 .catch(error => console.error('Error:', error));
@@ -105,7 +106,6 @@ $users = json_decode($response, true);
             if (event.target.classList.contains("edit-btn") || event.target.classList.contains("delete-btn")) {
                 return;
             }
-            
             // Show modal only if not clicking edit/delete
             viewUser(id, role);
         }
