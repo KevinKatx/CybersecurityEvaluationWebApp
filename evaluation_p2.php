@@ -38,6 +38,9 @@ if (!isset($_SESSION["user"])) {
                 <li><strong>Accept</strong> if the email is legitimate.</li>
                 <li><strong>Reject</strong> if it is spam.</li>
                 <li><strong>Report</strong> if it is phishing.</li>
+                <br>
+                <li><strong><div id="readTheNotes">!!! READ THE NOTES !!!</div></strong></li>
+                <br>
                 <li>Check for urgent language, sender details, and unexpected attachments or links.</li>
             </ul>
             <button class="close-btn" onclick="closeModal()">Got It!</button>
@@ -78,7 +81,7 @@ if (!isset($_SESSION["user"])) {
         const emails = [
             { sender: "bank@secure.com", subject: "Important: Update Your Password", body: "Dear user, please update your password immediately to secure your account.", type: "phishing" },
             { sender: "newsletter@shop.com", subject: "Big Sale!", body: "Check out our latest discounts!", type: "spam" },
-            { sender: "Evelyn@company.com", subject: "Meeting Reminder", body: "Don't forget our meeting at 3 PM.", type: "legitimate" },
+            { sender: "Evelyn@yahoo.com.ph", subject: "Meeting Reminder", body: "Don't forget our meeting at 3 PM.", type: "legitimate" },
             { sender: "security@paypal-support.com", subject: "Your Account Has Been Compromised!", body: "Please click this link to secure your account immediately.", type: "phishing" },
             { sender: "hr@company.com", subject: "Employee Benefits Update", body: "Please review the new company benefits policy attached.", type: "legitimate" },
             { sender: "lottery@bigwin.com", subject: "Congratulations, You Won!", body: "Claim your $1,000,000 prize now by providing your details!", type: "phishing" },
@@ -88,7 +91,7 @@ if (!isset($_SESSION["user"])) {
             { sender: "it-department@company.com", subject: "Scheduled Maintenance Notice", body: "System maintenance will occur this Saturday at midnight.", type: "legitimate" },
             { sender: "noreply@randomsurvey.com", subject: "Win a Free Gift Card!", body: "Take this short survey and win a $500 gift card!", type: "spam" },
             { sender: "helpdesk@company.com", subject: "Password Expiration Notice", body: "Your company password will expire in 3 days. Change it here.", type: "phishing" },
-            { sender: "Evelny@company.com", subject: "Credential Request", body: "Can you give me your password, its an emergency", type: "phishing" },
+            { sender: "Evelny@yahoo.com.ph  ", subject: "Credential Request", body: "Can you give me your password, its an emergency", type: "phishing" },
             { sender: "deals@bigsavings.com", subject: "Exclusive Offer Just for You!", body: "Hurry! Limited-time discounts on all products. Click here to claim.", type: "spam" },
             { sender: "newsletter@dailynews.com", subject: "Shocking News You Can't Miss!", body: "Read the latest viral story now!", type: "spam" },
             { sender: "kennethVice@gmail.com", subject: "Reports on reservation status", body: "Can you send me the files on regarding the reservation of Mrs. Doe? Thank you", type: "legitimate" }

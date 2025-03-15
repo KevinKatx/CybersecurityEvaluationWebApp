@@ -1,5 +1,16 @@
 <?php
 
+include('db.php');
+session_start();
+
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Admin') {
+    echo "<script>
+            alert('You are unauthorized to view this page');
+            window.location.href='login.php';
+          </script>";
+    exit();
+}
+
 $api_url = 'http://127.0.0.1/CybersecurityEvaluationWebApp/api.php';
 
 $ch = curl_init($api_url);
@@ -31,7 +42,7 @@ $users = json_decode($response, true);
             <p id="modalContent"></p> 
         </div>
     </div>
-    <a href="login.php" class="back-button">Back to Login</a>
+    <a href="logout.php" class="back-button">Back to Login</a>
     <table>
         <thead>
             <tr>

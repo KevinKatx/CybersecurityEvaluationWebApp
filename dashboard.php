@@ -18,7 +18,7 @@
 </head>
 <body>
     <!-- Back Button -->
-    <a href="login.php" class="log-out">Logout</a>
+    <a href="logout.php" class="log-out">Logout</a>
     <div style="display: flex; flex-direction: column;">
         <div class="container">
             <div class="content">

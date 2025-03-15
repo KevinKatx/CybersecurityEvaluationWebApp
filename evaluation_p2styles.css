@@ -11,6 +11,9 @@ body {
     color: #3b2b08; /* Dark brown text for contrast */
 }
 
+#readTheNotes{
+    color:#dc3545
+}
 
 .modal {
     display: none; /* Hidden by default */
