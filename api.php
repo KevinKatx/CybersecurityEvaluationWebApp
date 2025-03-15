@@ -132,19 +132,41 @@ switch ($request_method){
         case "DELETE":
             global $conn;
         
-            // Retrieve ID from query parameter (e.g., api.php?id=5)
-            if (isset($_GET["id"])) {
-                $id = intval($_GET["id"]);
+            // Try to get ID from the request body first
+            $data = json_decode(file_get_contents("php://input"), true);
+            $id = isset($data["id"]) ? intval($data["id"]) : null;
         
+            // Fallback: Try to get ID from the URL query parameter (e.g., delete.php?id=5)
+            if (!$id && isset($_GET["id"])) {
+                $id = intval($_GET["id"]);
+            }
+        
+            if ($id) {
+
+                $query2 = "DELETE FROM evaluation WHERE employeeID = ?";
+                $stmt2 = $conn->prepare($query2);
+                $stmt2->bind_param("i", $id);
+
+                if ($stmt2->execute()) {
+                    echo json_encode(["message" => "Employee deleted successfully"]);
+                } else {
+                    echo json_encode(["message" => "Error deleting employee"]);
+                }
+
+
                 $query = "DELETE FROM employee WHERE id = ?";
                 $stmt = $conn->prepare($query);
                 $stmt->bind_param("i", $id);
         
                 if ($stmt->execute()) {
                     echo json_encode(["message" => "Employee deleted successfully"]);
+                
                 } else {
                     echo json_encode(["message" => "Error deleting employee"]);
                 }
+
+                
+
         
                 $stmt->close();
             } else {
@@ -152,6 +174,7 @@ switch ($request_method){
             }
         
             break;
+        
 }
     
 

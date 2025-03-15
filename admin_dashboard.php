@@ -73,7 +73,7 @@ $users = json_decode($response, true);
                             <a href="update.php?id=<?= $user['id'] ?>">
                                 <button class="edit-btn">Edit</button>
                             </a>
-                            <button class="delete-btn" onclick="deleteUser(<?= $user['id'] ?>)">Delete</button>
+                            <button class="delete-btn" onclick="deleteUser(<?= $user['id'] ?>);  document.location.href = 'http://localhost:3000/admin_dashboard.php',true;  ">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -92,7 +92,9 @@ $users = json_decode($response, true);
                 .then(response => response.json())
                 .then(data => {
                     alert(data.message);
-                    location.reload();
+                    
+                    // ✅ Force refresh the page after deletion
+                   
                 })
                 .catch(error => console.error('Error:', error));
             }
@@ -110,7 +112,6 @@ $users = json_decode($response, true);
 
         function viewUser(id, role) {
             console.log(`Viewing user with ID: ${id} and Role: ${role}`);
-
             fetch(`http://127.0.0.1/CybersecurityEvaluationWebApp/api.php?id=${id}`)
                 .then(response => response.json())
                 .then(data => {
