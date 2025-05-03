@@ -11,7 +11,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Admin') {
     exit();
 }
 
-$api_url = 'http://127.0.0.1/CybersecurityEvaluationWebApp/api.php';
+$api_url = 'http://hanikuresortcybereval.infinityfreeapp.com/api.php';
 
 $ch = curl_init($api_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -73,7 +73,7 @@ $users = json_decode($response, true);
                             <a href="update.php?id=<?= $user['id'] ?>">
                                 <button class="edit-btn">Edit</button>
                             </a>
-                            <button class="delete-btn" onclick="deleteUser(<?= $user['id'] ?>);">Delete</button>
+                            <button class="delete-btn" onclick="deleteUser(<?= $user['id'] ?>); document.location.href = 'admin_dashboard.php';">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -94,7 +94,6 @@ $users = json_decode($response, true);
                     alert(data.message);
                     
                     // ✅ Force refresh the page after deletion
-                    document.location.href = 'admin_dashboard.php';
                    
                 })
                 .catch(error => console.error('Error:', error));
@@ -112,7 +111,7 @@ $users = json_decode($response, true);
 
         function viewUser(id, role) {
             console.log(`Viewing user with ID: ${id} and Role: ${role}`);
-            fetch(`http://127.0.0.1/CybersecurityEvaluationWebApp/api.php?id=${id}`)
+            fetch(`https://hanikuresortcybereval.infinityfreeapp.com/api.php?id=${id}`)
                 .then(response => response.json())
                 .then(data => {
                     let modalContent = document.getElementById("modalContent");
